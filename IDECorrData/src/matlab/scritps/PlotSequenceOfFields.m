@@ -4,11 +4,11 @@
 % cmap = img.map;
 % 
 % imagesc(cmap)
-clc
-close all
-clear
+% clc
+% close all
+% clear
 
-load Results_NonlinearModel_PBC_Aniso
+% load Results_NonlinearModel_PBC_Aniso
 
 %%
 
@@ -19,7 +19,7 @@ Z = ones(41:41);
 
 height = 6;
 width = 8.8;
-fig = figure('units','centimeters','position',[0 0 width height],'filename',filename,...
+fig = figure('units','centimeters','position',[0 0 width height],...
     'papersize',[height, width],'paperorientation','landscape','renderer','painters');
 subplot(121)
 %# plot each slice as a texture-mapped surface (stacked along the Z-dimension)

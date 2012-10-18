@@ -7,7 +7,7 @@
 % ~~~~~~~~~~~
 % Delta = 0.5;                          % space step for the spatial discretisation
 Delta_squared = Delta^2;
-SpaceMaxPeriodicField = 30;                    % maximum space in mm
+SpaceMaxPeriodicField = 30;                    % maximum space in mm, should take input from the parent script!!!!
 SpaceMinPeriodicField = -30;         % minimum space in mm
 NPointsInPeriodicField = (SpaceMaxPeriodicField-SpaceMinPeriodicField)/Delta+1;
 NPointsInField = (NPointsInPeriodicField-1)/3 + 1;
@@ -50,7 +50,7 @@ for n=1:NPointsInField
         
         temp2 = middle + topleft + top + topright + left + right + bottom + bottomleft + bottomright;
         
-        Sigma_gamma(:,mm) = temp2(:);
+        Sigma_gamma(:,mm) = temp2(:);       % unwrap into a covariance matrix
         mm=mm+1;
         
 %         clim = [-200 -1];         % for log
@@ -67,7 +67,7 @@ for n=1:NPointsInField
 %         subplot(3,3,7),imagesc(bottomleft,clim)
 %         subplot(3,3,8),imagesc(bottom,clim)
 %         subplot(3,3,9),imagesc(bottomright,clim)
-% % 
+% % % 
 %  %       imagesc(log10(temp2))
 %         drawnow
 %         clim = [0 0.08];
