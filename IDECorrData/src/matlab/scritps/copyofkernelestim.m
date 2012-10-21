@@ -42,7 +42,7 @@ EstimationSpaceMin = -10;
 %% temporal parameters
 % ~~~~~~~~~~~~~~~~
 Ts = 1e-3;              % sampling period (s)
-T = 20000;              % maximum time (ms)          % 2 seconds = 100 seconds
+T = 1000;              % maximum time (ms)          % 2 seconds = 100 seconds
 
 %% spatial kernel parameters
 % ~~~~~~~~~~~~~~
@@ -59,7 +59,31 @@ psi_0 = Define2DGaussian(0,0, sigma_psi(1)^2, 0,NPoints,SpaceMin,SpaceMax);
 psi_1 = Define2DGaussian(0,0, sigma_psi(2)^2, 0,NPoints,SpaceMin,SpaceMax);
 psi_2 = Define2DGaussian(0,0, sigma_psi(3)^2, 0,NPoints,SpaceMin,SpaceMax);
 
+psi_0_scaled = theta(1)*psi_0;
+psi_1_scaled = theta(2)*psi_1;
+psi_2_scaled = theta(3)*psi_2;
+
 w = theta(1)*psi_0 + theta(2)*psi_1 + theta(3)*psi_2;       % the kernel
+
+% plotting 3 scaled gaussians and resulting mexican hat
+% filename = 'C:\Documents and Settings\lpolster\IDECorrData\src\matlab\scritps\4KernelPlot.pdf';
+% figure('filename',filename)  
+% subplot(221)
+% surf(w)
+% title('Spatial Kernel')
+% colorbar
+% subplot(222)
+% surf(psi_0_scaled)
+% title('Local Kernel')
+% colorbar
+% subplot(223)
+% surf(psi_1_scaled)
+% title('Surround Kernel')
+% colorbar
+% subplot(224)
+% surf(psi_2_scaled)
+% title('Lateral Kernel')
+% colorbar
 
 psi_0_large = Define2DGaussian(0,0, sigma_psi(1)^2, 0,2*NPoints-1,2*SpaceMin,2*SpaceMax);
 psi_1_large = Define2DGaussian(0,0, sigma_psi(2)^2, 0,2*NPoints-1,2*SpaceMin,2*SpaceMax);
@@ -68,20 +92,21 @@ psi_2_large = Define2DGaussian(0,0, sigma_psi(3)^2, 0,2*NPoints-1,2*SpaceMin,2*S
 w_large = theta(1)*psi_0_large + theta(2)*psi_1_large + theta(3)*psi_2_large;       % the large kernel
 
 filename = 'C:\Documents and Settings\lpolster\IDECorrData\src\matlab\scritps\KernelPlot.pdf'; % need to add
-figure('units','centimeters','position',[0 0 plotwidth plotheight],'filename',filename,...
-    'papersize',[plotheight, plotwidth],'paperorientation','landscape','renderer','painters')  
+%figure('units','centimeters','position',[0 0 plotwidth plotheight],'filename',filename,...
+%    'papersize',[plotheight, plotwidth],'paperorientation','landscape','renderer','painters')  
 
-cmax = 25.5;        % for plotting
-cmin = -10.0;
-imagesc(r,r,w,[cmin,cmax])
-xlabel('Space','fontsize',FS_Label)
-ylabel('Space','fontsize',FS_Label)
-xlim([-10,10])
-ylim([-10,10])
-set(gca,'xtick',[-10 0 10],'ytick',[-10 0 10],'fontsize',FS_Tick)
-axis square
-axis xy
-colorbar
+% cmax = 25.5;        % for plotting
+% cmin = -10.0;
+% imagesc(r,r,w,[cmin,cmax])
+% title('Spatial Kernel')
+% xlabel('Space','fontsize',FS_Label)
+% ylabel('Space','fontsize',FS_Label)
+% xlim([-10,10])
+% ylim([-10,10])
+% set(gca,'xtick',[-10 0 10],'ytick',[-10 0 10],'fontsize',FS_Tick)
+% axis square
+% axis xy
+% colorbar
 
 %% sensor parameters
 % ~~~~~~~~~~~~~~~
@@ -141,7 +166,7 @@ y_full = y_full(2:end-1,2:end-1); % trim to correct size
 varepsilon_t = reshape(varepsilon(1,:,:), NSensors_xy, NSensors_xy);
 y(1,:,:) = y_full(sensor_index,sensor_index) + varepsilon_t;
 
-figure
+fighandle = figure;
 %% Generate data
 for t=1:T-1                                                                                                                                                                          
     
@@ -159,10 +184,10 @@ for t=1:T-1
     e_t = reshape(e(t,:,:),NPoints,NPoints);        % the disturbance
     v_t_plus1 = Ts*g + xi*v_t + e_t;  % update field 
     v(t+1,:,:) = v_t_plus1;
-    
-%     imagesc(v_t_plus1)
-%     colorbar
-%     drawnow
+   
+imagesc(v_t_plus1)
+colorbar
+drawnow
 
     % filter field with sensor kernel and get observations
     v_t_plus1 = padarray(v_t_plus1,size(v_t_plus1),'circular');
@@ -172,6 +197,55 @@ for t=1:T-1
     varepsilon_tplus1 = reshape(varepsilon(t+1,:,:),NSensors_xy,NSensors_xy);
     y_tplus1 = y_full(sensor_index,sensor_index) + varepsilon_tplus1;                 % discretize sensor spacing
     y(t+1,:,:) = y_tplus1;
+    
+    
+    
+    if ~(exist('Plots','dir') == 7) % folder name
+        mkdir('Plots');
+    end
+    
+    filenamebase = 'Plots/generated_Data_'; 
+    
+    if t == 500 || t == 501 ||  t == 502 || t == 503 ||  t == 504
+        
+        save_idx = 0;
+        tempfilename = strcat(filenamebase,num2str(t),'_Run',num2str(save_idx),'.fig');
+        while exist(strcat(tempfilename),'file') == 2;
+            tempfilename = strcat(filenamebase,num2str(t),'_Run',num2str(save_idx),'.fig');
+            save_idx = save_idx +1;
+        end
+        saveas(fighandle, tempfilename, 'fig');
+        
+        save_idx = 0;
+        tempfilename = strcat(filenamebase,num2str(t),'_Run',num2str(save_idx),'.jpg');
+        while exist(strcat(tempfilename),'file') == 2;
+            tempfilename = strcat(filenamebase,num2str(t),'_Run',num2str(save_idx),'.jpg');
+            save_idx = save_idx +1;
+        end
+        print(fighandle, '-djpeg', tempfilename);
+        
+        save_idx = 0;
+        tempfilename = strcat(filenamebase,num2str(t),'_Run',num2str(save_idx),'.eps');
+        while exist(strcat(tempfilename),'file') == 2;
+            tempfilename = strcat(filenamebase,num2str(t),'_Run',num2str(save_idx),'.eps');
+            save_idx = save_idx +1;
+        end
+        print(fighandle, '-depsc', tempfilename);
+        
+        save_idx = 0;
+        tempfilename = strcat(filenamebase,num2str(t),'_Run',num2str(save_idx),'.pdf');
+        while exist(strcat(tempfilename),'file') == 2;
+            tempfilename = strcat(filenamebase,num2str(t),'_Run',num2str(save_idx),'.pdf');
+            save_idx = save_idx +1;
+        end
+        print(fighandle, '-dpdf', tempfilename);
+
+        clear tempfilename save_idx
+       
+     % change the size of the plot or resolution: http://www.mathworks.com.au/help/matlab/ref/print.html
+     
+        
+    end
     
 end
 
