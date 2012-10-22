@@ -47,21 +47,20 @@ T = 1000;              % maximum time (ms)          % 2 seconds = 100 seconds
 %% spatial kernel parameters
 % ~~~~~~~~~~~~~~
 
-theta(1) = 100;%80.0;           % local kernel amplitude
-theta(2) = -80;             % surround kernel amplitude
-theta(3) = 5;               % lateral kernel amplitude
+theta(0) = 0.2;%80.0;           % local kernel amplitude
+theta(1) = -0.2;             % surround kernel amplitude
+theta(2) = 1;               % lateral kernel amplitude
 
-sigma_psi(1) = 1.8;     % local kernel width
-sigma_psi(2) = 2.4;     % surround kernel width
-sigma_psi(3) = 6;       % lateral kernel width
+sigma_psi_squared = 5.76;     % kernel width squared
 
-psi_0 = Define2DGaussian(0,0, sigma_psi(1)^2, 0,NPoints,SpaceMin,SpaceMax);
-psi_1 = Define2DGaussian(0,0, sigma_psi(2)^2, 0,NPoints,SpaceMin,SpaceMax);
-psi_2 = Define2DGaussian(0,0, sigma_psi(3)^2, 0,NPoints,SpaceMin,SpaceMax);
 
-psi_0_scaled = theta(1)*psi_0;
-psi_1_scaled = theta(2)*psi_1;
-psi_2_scaled = theta(3)*psi_2;
+psi_0 = Define2DGaussian(-0.5,-0.5, sigma_psi_squared, 0,NPoints,SpaceMin,SpaceMax);
+psi_1 = Define2DGaussian(0,0, sigma_psi_squared, 0,NPoints,SpaceMin,SpaceMax);
+psi_2 = Define2DGaussian(0.5,0.5, sigma_psi_squared, 0,NPoints,SpaceMin,SpaceMax);
+
+psi_0_scaled = theta(0)*psi_0;
+psi_1_scaled = theta(1)*psi_1;
+psi_2_scaled = theta(2)*psi_2;
 
 w = theta(1)*psi_0 + theta(2)*psi_1 + theta(3)*psi_2;       % the kernel
 
@@ -135,8 +134,8 @@ v_0 = 1.8;                    % firing threshold, value from Wendling 2002??
 
 %% synaptic kernel parameter
 % ~~~~~~~~~~~~~~~~~~~~
-tau = 0.01;                   % synaptic time constant
-zeta = 1/tau;                 % inverse synaptic time constant
+
+zeta = 0;                 % inverse synaptic time constant
 xi = 1-Ts*zeta;           % coefficient for the discrete time model
 
 %% disturbance paramters

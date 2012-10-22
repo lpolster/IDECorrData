@@ -47,17 +47,16 @@ T = 1000;              % maximum time (ms)          % 2 seconds = 100 seconds
 %% spatial kernel parameters
 % ~~~~~~~~~~~~~~
 
-theta(1) = 100;%80.0;           % local kernel amplitude
-theta(2) = -80;             % surround kernel amplitude
-theta(3) = 5;               % lateral kernel amplitude
+theta(1) = 0.2;        % local kernel amplitude
+theta(2) = -0.2;             % surround kernel amplitude
+theta(3) = 1;               % lateral kernel amplitude
 
-sigma_psi(1) = 1.8;     % local kernel width
-sigma_psi(2) = 2.4;     % surround kernel width
-sigma_psi(3) = 6;       % lateral kernel width
+sigma_psi_squared = 5.76;     % kernel width squared
 
-psi_0 = Define2DGaussian(0,0, sigma_psi(1)^2, 0,NPoints,SpaceMin,SpaceMax);
-psi_1 = Define2DGaussian(0,0, sigma_psi(2)^2, 0,NPoints,SpaceMin,SpaceMax);
-psi_2 = Define2DGaussian(0,0, sigma_psi(3)^2, 0,NPoints,SpaceMin,SpaceMax);
+
+psi_0 = Define2DGaussian(-0.5,-0.5, sigma_psi_squared, 0,NPoints,SpaceMin,SpaceMax);
+psi_1 = Define2DGaussian(0,0, sigma_psi_squared, 0,NPoints,SpaceMin,SpaceMax);
+psi_2 = Define2DGaussian(0.5,0.5, sigma_psi_squared, 0,NPoints,SpaceMin,SpaceMax);
 
 psi_0_scaled = theta(1)*psi_0;
 psi_1_scaled = theta(2)*psi_1;
@@ -85,9 +84,9 @@ w = theta(1)*psi_0 + theta(2)*psi_1 + theta(3)*psi_2;       % the kernel
 % title('Lateral Kernel')
 % colorbar
 
-psi_0_large = Define2DGaussian(0,0, sigma_psi(1)^2, 0,2*NPoints-1,2*SpaceMin,2*SpaceMax);
-psi_1_large = Define2DGaussian(0,0, sigma_psi(2)^2, 0,2*NPoints-1,2*SpaceMin,2*SpaceMax);
-psi_2_large = Define2DGaussian(0,0, sigma_psi(3)^2, 0,2*NPoints-1,2*SpaceMin,2*SpaceMax);
+psi_0_large = Define2DGaussian(0,0, sigma_psi_squared, 0,2*NPoints-1,2*SpaceMin,2*SpaceMax);
+psi_1_large = Define2DGaussian(0,0, sigma_psi_squared, 0,2*NPoints-1,2*SpaceMin,2*SpaceMax);
+psi_2_large = Define2DGaussian(0,0, sigma_psi_squared, 0,2*NPoints-1,2*SpaceMin,2*SpaceMax);
 
 w_large = theta(1)*psi_0_large + theta(2)*psi_1_large + theta(3)*psi_2_large;       % the large kernel
 
@@ -135,8 +134,8 @@ v_0 = 1.8;                    % firing threshold, value from Wendling 2002??
 
 %% synaptic kernel parameter
 % ~~~~~~~~~~~~~~~~~~~~
-tau = 0.01;                   % synaptic time constant
-zeta = 1/tau;                 % inverse synaptic time constant
+
+zeta = 0;                 % inverse synaptic time constant
 xi = 1-Ts*zeta;           % coefficient for the discrete time model
 
 %% disturbance paramters
@@ -170,7 +169,7 @@ R_yy = zeros(T,2*NSensors_xy-1,2*NSensors_xy-1);  %initialize autocorrelation ma
 R_varepsilon_varepsilon = zeros(T,2*NSensors_xy-1,2*NSensors_xy-1);
 
 
-% fighandle = figure;
+fighandle = figure;
 %% Generate data
 for t=1:T-1                                                                                                                                                                          
     
@@ -191,9 +190,9 @@ for t=1:T-1
     v_t_plus1 = Ts*g + xi*v_t + e_t;  % update field 
     v(t+1,:,:) = v_t_plus1;
    
-% imagesc(v_t_plus1)
-% colorbar
-% drawnow
+imagesc(v_t_plus1)
+colorbar
+drawnow
 
     % filter field with sensor kernel and get observations
     v_t_plus1 = padarray(v_t_plus1,size(v_t_plus1),'circular');
@@ -213,7 +212,7 @@ for t=1:T-1
         mkdir('Plots');
     end
     
-    filenamebase = 'Plots/generated_Data_'; 
+    filenamebase = 'Plots/generated_Data_linear'; 
     
     if t == 500 || t == 501 ||  t == 502 || t == 503 ||  t == 504
         

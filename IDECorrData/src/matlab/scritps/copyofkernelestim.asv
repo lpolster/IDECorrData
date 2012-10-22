@@ -167,10 +167,8 @@ varepsilon_t = reshape(varepsilon(1,:,:), NSensors_xy, NSensors_xy);
 y(1,:,:) = y_full(sensor_index,sensor_index) + varepsilon_t;
 
 R_yy = zeros(T,2*NSensors_xy-1,2*NSensors_xy-1);  %initialize autocorrelation matrix
-R_varepsilon_varepsilon = zeros(T,2*NSensors_xy-1,2*NSensors_xy-1);
 
-
-% fighandle = figure;
+fighandle = figure;
 %% Generate data
 for t=1:T-1                                                                                                                                                                          
     
@@ -204,7 +202,14 @@ for t=1:T-1
     y_tplus1 = y_full(sensor_index,sensor_index) + varepsilon_tplus1;                 % discretize sensor spacing
     y(t+1,:,:) = y_tplus1;
     
-    R_varepsilon_varepsilon(t,:,:) = xcorr2(varepsilon_tplus1,varepsilon_tplus1);
+    R_corr = squeeze(mean(R_yy(500:end-1,:,:),1));
+    F_R_corr = fft2(R_corr);
+    
+%     plot(min(F_R_corr))
+%     plot ((sigma_varepsilon)^2)
+    
+    diff = min(F_R_corr)-((sigma_varepsilon)^2);
+    imagesc(diff)
     
    
     
@@ -257,18 +262,7 @@ for t=1:T-1
     end
     
 end
-%  mean_Noise = squeeze(mean(R_varepsilon_varepsilon(500:end-1,:,:),1));
-%  R_corr = squeeze(mean(R_yy(500:end-1,:,:),1));
-%  F_R_corr = fft2(R_corr - mean_Noise);
-%     
-% %     plot(min(F_R_corr))
-% %     plot ((sigma_varepsilon)^2)
-%     
-%     diff = min((abs(F_R_corr)))-((sigma_varepsilon)^2);
-%     figure
-%     plot(diff)
-%     figure
-%     hist(diff)
+
 toc
 
 %%
