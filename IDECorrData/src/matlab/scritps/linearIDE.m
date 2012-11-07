@@ -190,9 +190,9 @@ for t=1:T-1
     v_t_plus1 = Ts*g + xi*v_t + e_t;  % update field 
     v(t+1,:,:) = v_t_plus1;
    
-imagesc(v_t_plus1)
-colorbar
-drawnow
+% imagesc(v_t_plus1)
+% colorbar
+% drawnow
 
     % filter field with sensor kernel and get observations
     v_t_plus1 = padarray(v_t_plus1,size(v_t_plus1),'circular');
@@ -256,18 +256,50 @@ drawnow
     end
     
 end
-%  mean_Noise = squeeze(mean(R_varepsilon_varepsilon(500:end-1,:,:),1));
-%  R_corr = squeeze(mean(R_yy(500:end-1,:,:),1));
-%  F_R_corr = fft2(R_corr - mean_Noise);
-%     
-% %     plot(min(F_R_corr))
-% %     plot ((sigma_varepsilon)^2)
-%     
-%     diff = min((abs(F_R_corr)))-((sigma_varepsilon)^2);
-%     figure
-%     plot(diff)
-%     figure
-%     hist(diff)
+ mean_Noise = squeeze(mean(R_varepsilon_varepsilon(500:end-1,:,:),1));
+ R_corr = squeeze(mean(R_yy(500:end-1,:,:),1));
+%  figure
+%  subplot(211)
+%  plot(R_corr)
+%  subplot(212)
+%  plot(mean_Noise)
+ R_corr_n = R_corr - mean_Noise;
+ F_R_corr_fft = fft2(R_corr_n);
+ %F_R_corr =fft(fft(R_corr_n).').';
+    
+%     plot(min(F_R_corr))
+%     plot ((sigma_varepsilon)^2)
+    
+%diff = min(abs(F_R_corr))-((sigma_varepsilon)^2);
+%figure
+%plot(diff)
+
+F_R_corr_column = zeros(27,27);
+F_R_corr = zeros(27,27);
+size_F_R_corr = size (F_R_corr);
+M = size_F_R_corr(1,1); % number of rows
+N = size_F_R_corr(1,2); % number of columns
+
+for n=1:1:N % column 1 to N  % calculate fourier transform for each column
+for k=1:1:N
+    for m=1:1:N
+        x(m)= R_corr_n(m,n) * exp(-2*pi*j/N*(m-1)*(k-1));
+        F_R_corr_column(k,n) = F_R_corr_column(k,n)+ x(m);
+    end
+      
+end
+end
+
+for m=1:1:M % row 1 to M
+for k=1:1:M
+    for n=1:1:M
+        x(n) = F_R_corr_column(m,n) * exp(-2*pi*j/N*(n-1)*(k-1));
+        F_R_corr(m,k) = F_R_corr(m,k) + x(n); % calculate fourier transform for each row
+    end
+end
+end
+% Diff = F_R_corr -  F_R_corr_fft
+   
 toc
 
 %%
