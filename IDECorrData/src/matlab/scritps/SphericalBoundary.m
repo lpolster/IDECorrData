@@ -9,8 +9,8 @@
 Delta_squared = Delta^2;
 SpaceMaxPeriodicField = 30;                    % maximum space in mm, should take input from the parent script!!!!
 SpaceMinPeriodicField = -30;         % minimum space in mm
-NPointsInPeriodicField = (SpaceMaxPeriodicField-SpaceMinPeriodicField)/Delta+1;
-NPointsInField = (NPointsInPeriodicField-1)/3 + 1;
+NPointsInPeriodicField = (SpaceMaxPeriodicField-SpaceMinPeriodicField)/Delta+1; %121
+NPointsInField = (NPointsInPeriodicField-1)/3 + 1; %41
 r = linspace(SpaceMinPeriodicField/3,SpaceMaxPeriodicField/3,NPointsInField);      % define space
 
 % temporal parameters
@@ -46,14 +46,14 @@ for n=1:NPointsInField
         
         bottomleft = [zeros(FirstThirdEnd+1,1) [temp(SecondThirdEnd+1:end,1:FirstThirdEnd) ; zeros(1,FirstThirdEnd)]];
         bottom = [temp(SecondThirdEnd+1:end,FirstThirdEnd+1:SecondThirdEnd) ; zeros(1,FirstThirdEnd+1)];
-        bottomright = [[temp(SecondThirdEnd+1:end,SecondThirdEnd+1:end) zeros(FirstThirdEnd,1)] ; zeros(1,FirstThirdEnd+1)];
+        bottomright = [[temp(SecondThirdEnd+1:end,SecondThirdEnd+1:end), zeros(FirstThirdEnd,1)] ; zeros(1,FirstThirdEnd+1)];
         
         temp2 = middle + topleft + top + topright + left + right + bottom + bottomleft + bottomright;
-        
+           
         Sigma_gamma(:,mm) = temp2(:);       % unwrap into a covariance matrix
         mm=mm+1;
         
-%         clim = [-200 -1];         % for log
+%        clim = [-200 -1];         % for log
 %         clim = [0 0.08];
 % 
 %         subplot(3,3,1),imagesc(topleft,clim)
@@ -67,11 +67,11 @@ for n=1:NPointsInField
 %         subplot(3,3,7),imagesc(bottomleft,clim)
 %         subplot(3,3,8),imagesc(bottom,clim)
 %         subplot(3,3,9),imagesc(bottomright,clim)
-% % % 
-%  %       imagesc(log10(temp2))
-%         drawnow
-%         clim = [0 0.08];
 % % 
+ %      imagesc(log10(temp2))
+        drawnow
+%        clim = [0 0.08];
+% 
 %         subplot(3,3,1),imagesc(topleft,clim)
 %         subplot(3,3,2),imagesc(top,clim)
 %         subplot(3,3,3),imagesc(topright,clim)
@@ -87,7 +87,9 @@ for n=1:NPointsInField
 % %         imagesc(log10(temp2))
 %         drawnow
      end
- end
+end
+ 
+
 
     %end
 %end

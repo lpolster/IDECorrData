@@ -3,25 +3,100 @@
 0
 0
 1
-:\Documents and Settings\lpolster\Desktop\TeX\Hauptseminar Lisa.tex
-4
+E:\TeX CfNE\main Report.tex
+23
+8
 3
-2
 
 manuscript.tex
 TeX
 1060859 0 -1 1057 -1 405 22 29 1216 499 0 193 136 -1 -1 0 0 66 -1 -1 66 1 0 405 -1   0
+E:\TeX CfNE\main Report.tex
+TeX
+135278587 0 -1 590 -1 547 44 58 1238 528 0 121 391 -1 -1 0 0 12 -1 -1 12 1 0 547 -1   0
+E:\TeX CfNE\References_cfne.bib
+BibTeX:UNIX
+1147890 0 1 20 2 27 110 145 1304 596 1 281 34 -1 -1 0 0 15 0 0 15 1 0 27 2   0
+E:\TeX CfNE\header.tex
+TeX
+269496315 0 -1 0 -1 622 66 87 1260 557 0 25 272 -1 -1 0 0 9 -1 -1 9 1 0 622 -1   0
+E:\TeX CfNE\titlepage.tex
+TeX
+1060859 0 -1 0 -1 27 88 116 1282 586 1 81 68 -1 -1 0 0 18 -1 -1 18 1 0 27 -1   0
+E:\TeX CfNE\subsection\IDE.tex
+TeX
+1060859 0 -1 0 -1 0 154 203 1348 673 1 73 -1887 -1 -1 0 0 39 -1 -1 39 1 0 0 -1   0
+E:\TeX CfNE\subsection\DCF.tex
+TeX
+1060859 0 -1 4984 -1 5050 0 0 1194 470 1 161 435 -1 -1 0 0 45 -1 -1 45 1 0 5050 -1   0
+E:\TeX CfNE\subsection\state-space.tex
+TeX
+1060859 0 -1 0 -1 3920 22 29 1216 499 1 329 612 -1 -1 0 0 18 -1 -1 18 1 0 3920 -1   0
 :\Documents and Settings\lpolster\Report Internship.tex
 TeX:UTF-8
-17838075 0 146 29 -1 1660 44 58 1238 528 0 25 646 -1 -1 0 0 33 -1 -1 33 1 0 1660 -1   0
-:\Documents and Settings\lpolster\Desktop\test.tex
-TeX:DE:UTF-8:UNIX
-286371835 0 -1 35 -1 94 66 87 1260 557 0 33 34 -1 -1 0 0 0 -1 -1 0 1 0 94 -1   0
+286273531 0 146 29 -1 1660 44 58 1238 528 0 25 833 -1 -1 0 0 33 -1 -1 33 1 0 1660 -1   0
+E:\TeX CfNE\chapter\resume.tex
+TeX
+1060859 0 -1 0 -1 0 88 116 1282 586 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+E:\TeX CfNE\chapter\conclusion.tex
+TeX
+1060859 0 -1 0 -1 0 66 87 1260 557 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+E:\TeX CfNE\chapter\simulation.tex
+TeX
+1060859 0 -1 0 -1 0 44 58 1238 528 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+E:\TeX CfNE\section\mathematicalbackground.tex
+TeX
+1060859 0 -1 0 -1 0 132 174 1326 644 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+E:\TeX CfNE\section\cochlear.tex
+TeX
+1060859 0 -1 0 -1 0 110 145 1304 615 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+E:\TeX CfNE\section\auditorysystem.tex
+TeX
+1060859 0 -1 0 -1 0 88 116 1282 586 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+E:\TeX CfNE\chapter\background.tex
+TeX
+1060859 0 -1 0 -1 0 66 87 1260 557 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+E:\TeX CfNE\section\cfne.tex
+TeX
+1060859 0 -1 0 -1 0 44 58 1238 528 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+E:\TeX CfNE\section\mse.tex
+TeX
+1060859 0 -1 0 -1 0 22 29 1216 499 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+E:\TeX CfNE\section\growingesteem.tex
+TeX
+1060859 0 -1 0 -1 0 0 0 1194 470 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+E:\TeX CfNE\section\today.tex
+TeX
+1060859 0 -1 0 -1 0 154 203 1348 673 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+E:\TeX CfNE\section\history.tex
+TeX
+1060859 0 -1 0 -1 0 132 174 1326 644 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
+E:\TeX CfNE\chapter\introduction.tex
+TeX
+1060859 0 -1 0 -1 0 110 145 1304 615 0 25 0 -1 -1 0 0 -1 -1 -1 -1 1 0 0 -1   0
 :\Documents and Settings\lpolster\Desktop\TeX\Hauptseminar Lisa.tex
 TeX:DE:UTF-8:UNIX
 286371835 0 -1 4965 -1 4965 66 87 1260 557 0 33 595 -1 -1 0 0 33 -1 -1 33 1 0 4965 -1   0
 
-*:\Documents and Settings\lpolster\Desktop\TeX\Hauptseminar Lisa.tex
+*E:\TeX CfNE\main Report.tex
 >
-*References_Lisa.bib
+*header
+*titlepage
+*chapter/introduction
+*section/history
+*section/today
+*section/growingesteem
+*section/mse
+*section/cfne
+*chapter/background
+*section/auditorysystem
+*section/cochlear
+*section/mathematicalbackground
+*subsection/IDE
+*subsection/DCF
+*subsection/state-space
+*chapter/simulation
+*chapter/conclusion
+*chapter/resume
+*References_cfne.bib
 <

@@ -11,19 +11,24 @@ UseLinear = false;
 UseLinearized = false;
 UseNonlinear = true;
 
+
 CheckDerivation = false;
 
 tic                 % timer
 
 % for plotting
 % ~~~~~~~
-FS_Label = 8;          % point / fontsize for the axis label
-FS_Tick = 8;                % fontsize for the ticks
+FS_Label = 15;          % point / fontsize for the axis label 8
+FS_Tick = 15;                % fontsize for the ticks 8
 MS = 10;                     % marker size
 LW = 1;
-plotwidth = 4.4;        % cm
-plotheight = 3.5;
 
+plotwidth_fig1 = 40;        % cm 4.4
+plotheight_fig1 = 25;       %3.5
+plotwidth_fig2 = 25;        
+plotheight_fig2 = 15;
+plotwidth_fig3 = 12;        
+plotheight_fig3 = 12;
 % parameters
 
 %% spatial parameters
@@ -42,7 +47,7 @@ EstimationSpaceMin = -10;
 %% temporal parameters
 % ~~~~~~~~~~~~~~~~
 Ts = 1e-3;              % sampling period (s)
-T = 1000;              % maximum time (ms)          % 2 seconds = 100 seconds
+T = 10000;              % maximum time (ms) 20000         % 2 seconds = 100 seconds
 
 %% spatial kernel parameters
 % ~~~~~~~~~~~~~~
@@ -50,95 +55,108 @@ T = 1000;              % maximum time (ms)          % 2 seconds = 100 seconds
 theta(1) = 100;%80.0;           % local kernel amplitude
 theta(2) = -80;             % surround kernel amplitude
 theta(3) = 5;              % lateral kernel amplitude
+theta(4) = 15;              % anisotropic amplitude
 
 sigma_psi(1) = 1.8;     % local kernel width
 sigma_psi(2) = 2.4;     % surround kernel width
 sigma_psi(3) = 6;       % lateral kernel width
+sigma_psi(4) = 2;               % anisotropic width
 
 psi_0 = Define2DGaussian(0,0, sigma_psi(1)^2, 0,NPoints,SpaceMin,SpaceMax);
 psi_1 = Define2DGaussian(0,0, sigma_psi(2)^2, 0,NPoints,SpaceMin,SpaceMax);
 psi_2 = Define2DGaussian(0,0, sigma_psi(3)^2, 0,NPoints,SpaceMin,SpaceMax);
+psi_3 = Define2DGaussian(-3,0, sigma_psi(4)^2, 0,NPoints,SpaceMin,SpaceMax); % anisotropic
 
 psi_0_scaled = theta(1)*psi_0;
 psi_1_scaled = theta(2)*psi_1;
 psi_2_scaled = theta(3)*psi_2;
+psi_3_scaled = theta(4)*psi_3;
 
-w = theta(1)*psi_0 + theta(2)*psi_1 + theta(3)*psi_2;       % the kernel (k)
-
+%w = theta(1)*psi_0 + theta(2)*psi_1 + theta(3)*psi_2+ theta(4)*psi_3;       % the kernel (k)
+w = theta(1)*psi_0 + theta(2)*psi_1 + theta(3)*psi_2;  
 %%
 %plotting 3 scaled gaussians and resulting mexican hat
-filename = 'C:\Documents and Settings\lpolster\IDECorrData\src\matlab\scritps\4KernelPlot.pdf';
-figure('filename',filename)  
-subplot(221)
-surf(w)
-title('Spatial Kernel','FontSize', 25)
-xlabel('Space','FontSize', 20)
-ylabel('Space','FontSize', 20)
-zlabel('Connectivity Strength','FontSize', 20)
-xlim([0,50])
-ylim([0,50])
-set(gca,'FontSize', 15)
-colorbar('FontSize', 20)
-subplot(222)
-surf(psi_0_scaled)
-title('Local Kernel','FontSize', 25)
-xlabel('Space','FontSize', 20)
-ylabel('Space','FontSize', 20)
-zlabel('Connectivity Strength','FontSize', 20)
-xlim([0,50])
-ylim([0,50])
-set(gca,'FontSize', 15)
-colorbar('FontSize', 20)
-subplot(223)
-surf(psi_1_scaled)
-title('Surround Kernel', 'FontSize', 25)
-xlabel('Space','FontSize', 20)
-ylabel('Space','FontSize', 20)
-zlabel('Connectivity Strength','FontSize', 20)
-xlim([0,50])
-ylim([0,50])
-set(gca,'FontSize', 15)
-colorbar('FontSize', 20)
-subplot(224)
-surf(psi_2_scaled)
-title('Lateral Kernel', 'FontSize', 25)
-xlabel('Space','FontSize', 20)
-ylabel('Space','FontSize', 20)
-zlabel('Connectivity Strength','FontSize', 20)
-xlim([0,50])
-ylim([0,50])
-set(gca,'xtick',[0 50],'ytick',[0 50],'FontSize', 15)
-colorbar('FontSize', 20)
+% filename = 'C:\Documents and Settings\lpolster\IDECorrData\src\matlab\scritps\4KernelPlot.pdf';
+% figure('units','centimeters','position',[1 1 plotwidth_fig1 plotheight_fig1],'filename',filename,...
+%    'papersize',[plotheight_fig1, plotwidth_fig1],'paperorientation','landscape','renderer','painters') 
+% subplot(221)
+% surf(w)
+% title('Spatial Kernel','FontSize', 20)
+% xlabel('Space','FontSize', 15)
+% ylabel('Space','FontSize', 15)
+% zlabel('Connectivity Strength','FontSize', 15)
+% xlim([0,50])
+% ylim([0,50])
+% set(gca,'FontSize', 15)
+% colorbar('FontSize', 15)
+% subplot(222)
+% surf(psi_0_scaled)
+% title('Local Kernel','FontSize', 20)
+% xlabel('Space','FontSize', 15)
+% ylabel('Space','FontSize', 15)
+% zlabel('Connectivity Strength','FontSize', 15)
+% xlim([0,50])
+% ylim([0,50])
+% set(gca,'FontSize', 15)
+% colorbar('FontSize', 15)
+% subplot(223)
+% surf(psi_1_scaled)
+% title('Surround Kernel', 'FontSize', 20)
+% xlabel('Space','FontSize', 15)
+% ylabel('Space','FontSize', 15)
+% zlabel('Connectivity Strength','FontSize', 15)
+% xlim([0,50])
+% ylim([0,50])
+% set(gca,'FontSize', 15)
+% colorbar('FontSize', 15)
+% subplot(224)
+% surf(psi_2_scaled)
+% title('Lateral Kernel', 'FontSize', 20)
+% xlabel('Space','FontSize', 15)
+% ylabel('Space','FontSize', 15)
+% zlabel('Connectivity Strength','FontSize', 15)
+% xlim([0,50])
+% ylim([0,50])
+% set(gca,'xtick',[0 50],'ytick',[0 50],'FontSize', 15)
+% colorbar('FontSize', 15)
 %%
 %
 x = linspace(SpaceMin,SpaceMax);  
 psi_simple_0 = exp(-(((x).^2)./(sigma_psi(1)).^2));
 psi_simple_1 = exp(-(((x).^2)./(sigma_psi(2)).^2));
 psi_simple_2 = exp(-(((x).^2)./(sigma_psi(3)).^2));
+psi_simple_3 = exp(-(((x+3).^2)./(sigma_psi(4)).^2));
 
 psi_simple_0_scaled = theta(1)*psi_simple_0;
 psi_simple_1_scaled = theta(2)*psi_simple_1;
 psi_simple_2_scaled = theta(3)*psi_simple_2;
+psi_simple_3_scaled = theta(4)*psi_simple_3;
 
-w_simple = theta(1)*psi_simple_0 + theta(2)*psi_simple_1 + theta(3)*psi_simple_2;
-
+%w_simple = theta(1)*psi_simple_0 + theta(2)*psi_simple_1 + theta(3)*psi_simple_2 + theta(4)*psi_simple_3;
+w_simple = theta(1)*psi_simple_0 + theta(2)*psi_simple_1 + theta(3)*psi_simple_2 ;
 %%
 %plot of gaussians and resulting mexhat
-% filename = 'C:\Documents and Settings\lpolster\IDECorrData\src\matlab\scritps\Mexhat.pdf';
-% figure('filename',filename)  
-% 
-% plot(x,w_simple, 'black','LineWidth',3)
-% xlabel('Space','FontSize', 20)
-% ylabel('Connectivity Strength','FontSize', 20)
-% hold on
-% plot(x,psi_simple_0_scaled, 'green')
-% hold on
-% plot(x,psi_simple_1_scaled,'red')
-% legend()
-% hold on
-% plot(x,psi_simple_2_scaled, 'blue')
-% legend('Mexican hat','short-range excitation','mid-range inhibition','long-range excitation')
-%%
+% % filename = 'C:\Documents and Settings\lpolster\IDECorrData\src\matlab\scritps\Mexhat.pdf';
+% % figure('units','centimeters','position',[0 5 plotwidth_fig2 plotheight_fig2],'filename',filename,...
+% %    'papersize',[plotheight_fig2, plotwidth_fig2],'paperorientation','landscape','renderer','painters')  
+% % 
+% % plot(x,w_simple, 'black','LineWidth',3)
+% % set(gca,'FontSize', 15)
+% % xlabel('Space','FontSize', 15)
+% % ylabel('Connectivity Strength','FontSize', 15)
+% % hold on
+% % plot(x,psi_simple_0_scaled, 'green')
+% % hold on
+% % plot(x,psi_simple_1_scaled,'red')
+% % legend()
+% % hold on
+% % plot(x,psi_simple_2_scaled, 'blue')
+% % % hold on
+% % % plot(x,psi_simple_3_scaled,'magenta')
+% % %legend('connectivity kernel','short-range excitation','mid-range inhibition','long-range excitation','anisotropic kernel')
+% % legend('Mexican hat','short-range excitation','mid-range inhibition','long-range excitation')
+
+% %%
 psi_0_large = Define2DGaussian(0,0, sigma_psi(1)^2, 0,2*NPoints-1,2*SpaceMin,2*SpaceMax);
 psi_1_large = Define2DGaussian(0,0, sigma_psi(2)^2, 0,2*NPoints-1,2*SpaceMin,2*SpaceMax);
 psi_2_large = Define2DGaussian(0,0, sigma_psi(3)^2, 0,2*NPoints-1,2*SpaceMin,2*SpaceMax);
@@ -146,21 +164,21 @@ psi_2_large = Define2DGaussian(0,0, sigma_psi(3)^2, 0,2*NPoints-1,2*SpaceMin,2*S
 w_large = theta(1)*psi_0_large + theta(2)*psi_1_large + theta(3)*psi_2_large;       % the large kernel %kernel k
 
 % filename = 'C:\Documents and Settings\lpolster\IDECorrData\src\matlab\scritps\KernelPlot.pdf'; % need to add
-% figure('units','centimeters','position',[0 0 plotwidth plotheight],'filename',filename,...
-%    'papersize',[plotheight, plotwidth],'paperorientation','landscape','renderer','painters')  
+% figure('units','centimeters','position',[10 5 plotwidth_fig3 plotheight_fig3],'filename',filename,...
+%    'papersize',[plotheight_fig3, plotwidth_fig3],'paperorientation','landscape','renderer','painters')  
 % 
-% cmax = 25.5;        % for plotting
+% cmax = 25;        % for plotting anisotropic: 10
 % cmin = -10.0;
 % imagesc(r,r,w,[cmin,cmax])
-% title('Spatial Kernel','FontSize', 25)
-% xlabel('Space','FontSize', 20)
-% ylabel('Space','FontSize', 20)
+% %title('Spatial Anisotropic Kernel','FontSize', 25)
+% xlabel('Space','FontSize', 15)
+% ylabel('Space','FontSize', 15)
 % xlim([-10,10])
 % ylim([-10,10])
-% set(gca,'xtick',[-10 0 10],'ytick',[-10 0 10],'FontSize', 20)
+% set(gca,'xtick',[-10 0 10],'ytick',[-10 0 10],'FontSize', 15)
 % axis square
 % axis xy
-% colorbar('FontSize', 20)
+% colorbar('FontSize', 15)
 
 %% sensor parameters
 % ~~~~~~~~~~~~~~~
@@ -310,48 +328,48 @@ for t=1:T-1
      % change the size of the plot or resolution: http://www.mathworks.com.au/help/matlab/ref/print.html
      
         
- end
+%  end
 
 %%
 %draw function at different points of time
 
-% if t == 500 
-% a=v_t_plus1(1:40,1:40);
-% end
-% if t == 501
-% b=v_t_plus1(1:40,1:40);
-% end
-% if t == 502 
-% c=v_t_plus1(1:40,1:40);
-% end
-% if t == 503 
-% d=v_t_plus1(1:40,1:40);
-% end
+if t == 500 
+a=v_t_plus1(1:40,1:40);
+end
+if t == 501
+b=v_t_plus1(1:40,1:40);
+end
+if t == 502 
+c=v_t_plus1(1:40,1:40);
+end
+if t == 503 
+d=v_t_plus1(1:40,1:40);
+end
 
-% end
-% figure; hold on;
-% 
-% ha=pcolor(a);
-% hb=pcolor(b);
-% hc=pcolor(c);
-% hd=pcolor(d);
-% % he=pcolor(e);
-% % hf=pcolor(f);
-% shading flat
-% shading interp
-% 
-% 
-% set(hb,'zdata',0*b+2)
-% set(hc,'zdata',0*c+4)
-% set(hd,'zdata',0*d+6)
-% axis([1 40 1 40])
-% set(gca,'XTickLabel',[])
-% set(gca,'YTickLabel',[]) 
-% set(gca,'ZTickLabel',[])
-% xlabel('Space','FontSize', 20)
-% ylabel('Space','FontSize', 20)
-% zlabel('Time','FontSize', 20)
-% title('Evolution of the Spatial Field','FontSize', 25)
+end
+figure; hold on;
+
+ha=pcolor(a);
+hb=pcolor(b);
+hc=pcolor(c);
+hd=pcolor(d);
+% he=pcolor(e);
+% hf=pcolor(f);
+shading flat
+shading interp
+
+
+set(hb,'zdata',0*b+2)
+set(hc,'zdata',0*c+4)
+set(hd,'zdata',0*d+6)
+axis([1 40 1 40])
+set(gca,'XTickLabel',[])
+set(gca,'YTickLabel',[]) 
+set(gca,'ZTickLabel',[])
+xlabel('Space','FontSize', 15)
+ylabel('Space','FontSize', 15)
+zlabel('Time','FontSize', 15)
+%title('Evolution of the Spatial Field','FontSize', 20)
 %%
 
 
